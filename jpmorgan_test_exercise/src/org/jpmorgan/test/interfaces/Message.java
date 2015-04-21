@@ -63,6 +63,4 @@ public abstract class Message {
 		return messageGroup;
 	}
 	
-	
-	
 }

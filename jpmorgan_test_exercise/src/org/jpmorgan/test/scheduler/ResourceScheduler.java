@@ -4,15 +4,13 @@ import java.util.Stack;
 
 import org.jpmorgan.test.interfaces.Message;
 
-public class ResourceScheduler {
+public abstract class ResourceScheduler {
 
 	// Stack queue for incoming messages
 	private Stack<Message> waitingQueue = new Stack<Message>();
 	
+	// Process messages
+	public abstract void processMessage(Message[] messages);
 	
-	public static void main(String[] args) {
-		
-		
-	}
 	
 }
