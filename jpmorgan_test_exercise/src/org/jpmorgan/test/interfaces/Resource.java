@@ -4,15 +4,11 @@ public abstract class Resource {
 
 	private String resourceName;
 	private int resourceId;
-	private boolean isResourceAvailable;
 	
 	public Resource(String resourceName, int resourceId) {
-		this.resourceId = resourceId;
-		this.resourceName = resourceName;
-		// When the resource is created, it's available for processing
-		this.isResourceAvailable = true;
+		this.setResourceId(resourceId);
+		this.setResourceName(resourceName);
 	}
-	
 	
 	// Returns true if the resource is available to process messages
 	public abstract boolean isResourceAvailable();
@@ -22,4 +18,21 @@ public abstract class Resource {
 	
 	// Ends processing a message with the resource
 	public abstract void endProcessing(Message msg);
+
+	public String getResourceName() {
+		return resourceName;
+	}
+
+	public void setResourceName(String resourceName) {
+		this.resourceName = resourceName;
+	}
+
+	public int getResourceId() {
+		return resourceId;
+	}
+
+	public void setResourceId(int resourceId) {
+		this.resourceId = resourceId;
+	}
+	
 }

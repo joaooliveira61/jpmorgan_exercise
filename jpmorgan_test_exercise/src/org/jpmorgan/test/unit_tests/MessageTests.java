@@ -8,7 +8,7 @@ public class MessageTests {
 	@Test
 	public void testSetNullMessageTitle() {
 		// Create
-		Message msg = Message(null, "Test text", 1);
+		//Message msg = Message(null, "Test text", 1);
 		
 		// Act
 		
