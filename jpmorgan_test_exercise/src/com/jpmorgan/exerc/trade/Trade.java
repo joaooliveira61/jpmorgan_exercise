@@ -12,7 +12,11 @@ import com.jpmorgan.exerc.stock.AbstractStock;
 public class Trade {
 
 	private int numOfShares;
-	private long tradeID;
+	private final long tradeID;
+	public long getTradeID() {
+		return tradeID;
+	}
+
 	private double price;
 	private EnumTradeIndicator tradeIndicator;
 	private Timestamp timeStamp;
