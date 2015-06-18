@@ -8,6 +8,7 @@ import java.util.Random;
 import com.jpmorgan.exerc.stock.AbstractStock;
 import com.jpmorgan.exerc.stock.EnumStockType;
 import com.jpmorgan.exerc.stock.StockFactory;
+import com.jpmorgan.exerc.trade.EnumTradeIndicator;
 import com.jpmorgan.exerc.trade.Trade;
 import com.jpmorgan.exerc.trade.TradeMarket;
 
@@ -38,8 +39,11 @@ public class StockTradeMarketExec {
 		Random tradeIndicator = new Random(); //if par number, sell. buy otherwise
 		for (int j = 0; j < listOfStocks.size(); j++) {
 			for (int k = 0; k < 10; k++) {
-				stockTradeMarket.addTrade(new Trade(tradeId, 
-						, price.nextDouble(), tradeIndicator.nextInt(), Timestamp.from(Instant.now()), listOfStocks.get(j)));
+				stockTradeMarket.addTrade(new Trade(tradeId, numOfShares.nextInt()
+						, price.nextDouble(), 
+						tradeIndicator.nextInt()%2 
+						== 0 ? EnumTradeIndicator.BUY : EnumTradeIndicator.SELL, 
+								Timestamp.from(Instant.now()), listOfStocks.get(j)));
 			}
 		}
 	}
