@@ -16,7 +16,6 @@ public class StockTradeMarketExec {
 
 	public static void main(String[] args) {
 		TradeMarket stockTradeMarket = new TradeMarket();
-		LinkedList<AbstractStock> listOfStocks = new LinkedList<AbstractStock>();
 		StockFactory stockFactory = new StockFactory();
 
 		String[] stockSymbols = {"TEA", "POP", "ALE", "GIN", "JOE"};
@@ -26,26 +25,33 @@ public class StockTradeMarketExec {
 		int[] fixedDividends = {0, 0, 0, 2, 0};
 		int[] parValues = {100, 100, 60, 100, 250};
 
-		// Create the stocks
+		Random stockPrice = new Random();
+		AbstractStock tempStock;
+		
+		// Create the initial set of stocks
 		for (int i = 0; i < 5; i++) {
-			listOfStocks.add(stockFactory.getStock(stockType[i], stockSymbols[i], 
-					lastDividends[i], fixedDividends[i], parValues[i]));
+			tempStock = stockFactory.getStock(stockType[i], stockSymbols[i], 
+					lastDividends[i], fixedDividends[i], parValues[i]);
+			tempStock.setStrockTradePrice(Math.abs(stockPrice.nextDouble()));
+			
+			stockTradeMarket.addStock(tempStock);
 		}
-
+		
 		// Generate 10 trades for each stock
 		Random numOfShares = new Random();
-		Random price = new Random();
-
-		for (int j = 0; j < listOfStocks.size(); j++) {
+		
+		for (int j = 0; j < stockTradeMarket.getNumOfAvailableStocks(); j++) {
 			for (int k = 0; k < 10; k++) {
 				stockTradeMarket.addTrade(
 						new Trade(stockTradeMarket.getNewTradeIdCounter(),
-								numOfShares.nextInt(), 
-								Math.abs(price.nextDouble()),
+								numOfShares.nextInt(),
 								Timestamp.from(Instant.now()),
-								listOfStocks.get(j)));
+								stockTradeMarket.getStockBySymbol(stockSymbols[j])));
 			}
 		}
+		
+		
+		
 	}
 
 }

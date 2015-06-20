@@ -14,6 +14,9 @@ public abstract class AbstractStock {
 	private int parValue;
 	private double peRatio = 0.0;
 	private double stockPrice = 0.0;
+	private double strockTradePrice = 0.0;
+	private long totalAvailableShares = 0L;
+	private long soldShares = 0L;
 
 	public AbstractStock(String stockSymbol, 
 			EnumStockType stockType, 
@@ -27,6 +30,7 @@ public abstract class AbstractStock {
 		setLastDividend(lastDividend);
 		setFixedDividend(fixedDividend);
 		setParValue(parValue);
+		this.totalAvailableShares = availableShares;
 	}
 
 	public String getStockSymbol() {
@@ -79,6 +83,30 @@ public abstract class AbstractStock {
 
 	public void setStockPrice(double stockPrice) {
 		this.stockPrice = stockPrice;
+	}
+	
+	public double getStrockTradePrice() {
+		return strockTradePrice;
+	}
+
+	public void setStrockTradePrice(double strockTradePrice) {
+		this.strockTradePrice = strockTradePrice;
+	}
+	
+	public long getTotalAvailableShares() {
+		return totalAvailableShares;
+	}
+
+	public void setTotalAvailableShares(long totalAvailableShares) {
+		this.totalAvailableShares = totalAvailableShares;
+	}
+	
+	public long getSoldShares() {
+		return soldShares;
+	}
+
+	public void setSoldShares(long soldShares) {
+		this.soldShares = soldShares;
 	}
 	
 	/**

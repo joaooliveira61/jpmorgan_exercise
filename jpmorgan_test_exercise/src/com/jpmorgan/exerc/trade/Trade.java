@@ -11,13 +11,9 @@ import com.jpmorgan.exerc.stock.AbstractStock;
  */
 public class Trade {
 
-	private int numOfShares;
+	private long numOfShares;
 	private final long tradeID;
-	public long getTradeID() {
-		return tradeID;
-	}
-
-	private double price;
+	private double tradePrice;
 	private EnumTradeIndicator tradeIndicator;
 	private Timestamp timeStamp;
 	private AbstractStock stock;
@@ -30,42 +26,87 @@ public class Trade {
 		this.timeStamp = timeStamp;
 	}
 
-	public int getNumOfShares() {
+	public long getNumOfShares() {
 		return numOfShares;
 	}
+	/**
+	 * 
+	 * @param numOfShares
+	 * @return True if the trade was completed successfuly,
+	 * false if the number of shares available is smaller than the
+	 * number of shares bought in the trade
+	 */
+	public boolean setNumOfShares(long numOfShares) {
+		if (this.getStock().getTotalAvailableShares()
+				> numOfShares) {
+			/*
+			 * If the value is greater than 0, shares are bough
+			 * If the value is less than 0, shares are sold
+			 * 
+			 * If the value is zero, set the following default case:
+			 *  -> Number of shares: 1
+			 *  -> Trade indicator : Buy
+			 */
 
-	public void setNumOfShares(int numOfShares) {
-		/*
-		 * If the value is greater than 0, shares are bough
-		 * If the value is less than 0, shares are sold
-		 * 
-		 * If the value is zero, set the following default case:
-		 *  -> Number of shares: 1
-		 *  -> Trade indicator : Buy
-		 */
-		if (numOfShares > 0 ) {
-			this.numOfShares = numOfShares;
-			this.tradeIndicator = EnumTradeIndicator.BUY;
-		} else if (numOfShares < 0){
-			this.numOfShares = Math.abs(numOfShares);
-			this.tradeIndicator = EnumTradeIndicator.SELL;
+			if (numOfShares > 0 ) {
+				this.numOfShares = numOfShares;
+				/*
+				 * Updates the number of available shares and the number
+				 * of sold shares
+				 */
+				this.getStock()
+				.setTotalAvailableShares(
+						this.getStock().getTotalAvailableShares() - numOfShares);
+				this.getStock().setSoldShares(
+						this.getStock().getSoldShares() + numOfShares);
+				this.tradeIndicator = EnumTradeIndicator.BUY;
+			} else if (numOfShares < 0){
+				this.numOfShares = Math.abs(numOfShares);
+				/*
+				 * Updates the number of available shares and the number
+				 * of sold shares
+				 */
+				this.getStock()
+				.setTotalAvailableShares(
+						this.getStock().getTotalAvailableShares() + numOfShares);
+				this.getStock().setSoldShares(
+						this.getStock().getSoldShares() - numOfShares);
+				this.tradeIndicator = EnumTradeIndicator.SELL;
+			} else {
+				this.numOfShares = 1;
+				/*
+				 * Updates the number of available shares and the number
+				 * of sold shares
+				 */
+				this.getStock()
+				.setTotalAvailableShares(
+						this.getStock().getTotalAvailableShares() + 1);
+				this.getStock().setSoldShares(
+						this.getStock().getSoldShares() - 1);
+				this.tradeIndicator = EnumTradeIndicator.BUY;
+			}
+
+			return true;
+
 		} else {
-			this.numOfShares = 1;
-			this.tradeIndicator = EnumTradeIndicator.BUY;
+			return false;
 		}
-
 	}
 
-	public double getPrice() {
-		return price;
+	public long getTradeID() {
+		return tradeID;
+	}
+
+	public double getTradePrice() {
+		return tradePrice;
 	}
 
 	/**
 	 * Multiplies the number of bough shares in the trade with the current
 	 * stock price
 	 */
-	public void setPrice() {
-		this.price = this.stock.getStockPrice() * this.numOfShares;
+	public void setTradePrice() {
+		this.tradePrice = this.stock.getStockPrice() * this.numOfShares;
 	}
 
 	public EnumTradeIndicator getTradeIndicator() {
