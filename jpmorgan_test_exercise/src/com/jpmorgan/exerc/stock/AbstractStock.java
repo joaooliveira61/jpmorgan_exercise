@@ -14,14 +14,19 @@ public abstract class AbstractStock {
 	private int parValue;
 	private double peRatio = 0.0;
 	private double stockPrice = 0.0;
-	
-	public AbstractStock(String stockSymbol, EnumStockType stockType, int lastDividend,
-			double fixedDividend, int parValue) {
-		this.stockSymbol = stockSymbol;
+
+	public AbstractStock(String stockSymbol, 
+			EnumStockType stockType, 
+			int lastDividend,
+			double fixedDividend, 
+			int parValue, 
+			long availableShares) {
+		
+		setStockSymbol(stockSymbol);
 		this.stockType = stockType;
-		this.lastDividend = lastDividend;
-		this.fixedDividend = fixedDividend;
-		this.parValue = parValue;
+		setLastDividend(lastDividend);
+		setFixedDividend(fixedDividend);
+		setParValue(parValue);
 	}
 
 	public String getStockSymbol() {

@@ -21,15 +21,13 @@ public class Trade {
 	private EnumTradeIndicator tradeIndicator;
 	private Timestamp timeStamp;
 	private AbstractStock stock;
-	
-	public Trade(long tradeID, int numOfShares, double price, EnumTradeIndicator tradeIndicator,
+
+	public Trade(long tradeID, int numOfShares,
 			Timestamp timeStamp, AbstractStock stock) {
-		this.tradeID = tradeID;
-		this.numOfShares = numOfShares;
-		this.price = price;
-		this.tradeIndicator = tradeIndicator;
-		this.timeStamp = timeStamp;
 		this.setStock(stock);
+		this.tradeID = tradeID;
+		setNumOfShares(numOfShares);
+		this.timeStamp = timeStamp;
 	}
 
 	public int getNumOfShares() {
@@ -37,23 +35,41 @@ public class Trade {
 	}
 
 	public void setNumOfShares(int numOfShares) {
-		this.numOfShares = numOfShares;
+		/*
+		 * If the value is greater than 0, shares are bough
+		 * If the value is less than 0, shares are sold
+		 * 
+		 * If the value is zero, set the following default case:
+		 *  -> Number of shares: 1
+		 *  -> Trade indicator : Buy
+		 */
+		if (numOfShares > 0 ) {
+			this.numOfShares = numOfShares;
+			this.tradeIndicator = EnumTradeIndicator.BUY;
+		} else if (numOfShares < 0){
+			this.numOfShares = Math.abs(numOfShares);
+			this.tradeIndicator = EnumTradeIndicator.SELL;
+		} else {
+			this.numOfShares = 1;
+			this.tradeIndicator = EnumTradeIndicator.BUY;
+		}
+
 	}
 
 	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
-		this.price = price;
+	/**
+	 * Multiplies the number of bough shares in the trade with the current
+	 * stock price
+	 */
+	public void setPrice() {
+		this.price = this.stock.getStockPrice() * this.numOfShares;
 	}
 
 	public EnumTradeIndicator getTradeIndicator() {
 		return tradeIndicator;
-	}
-
-	public void setTradeIndicator(EnumTradeIndicator tradeIndicator) {
-		this.tradeIndicator = tradeIndicator;
 	}
 
 	public Timestamp getTimeStamp() {
@@ -71,5 +87,5 @@ public class Trade {
 	public void setStock(AbstractStock stock) {
 		this.stock = stock;
 	}
-	
+
 }

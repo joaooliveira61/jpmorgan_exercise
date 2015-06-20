@@ -33,17 +33,17 @@ public class StockTradeMarketExec {
 		}
 
 		// Generate 10 trades for each stock
-		long tradeId = 0L;
 		Random numOfShares = new Random();
 		Random price = new Random();
-		Random tradeIndicator = new Random(); //if par number, sell. buy otherwise
+
 		for (int j = 0; j < listOfStocks.size(); j++) {
 			for (int k = 0; k < 10; k++) {
-				stockTradeMarket.addTrade(new Trade(tradeId, numOfShares.nextInt()
-						, price.nextDouble(), 
-						tradeIndicator.nextInt()%2 
-						== 0 ? EnumTradeIndicator.BUY : EnumTradeIndicator.SELL, 
-								Timestamp.from(Instant.now()), listOfStocks.get(j)));
+				stockTradeMarket.addTrade(
+						new Trade(stockTradeMarket.getNewTradeIdCounter(),
+								numOfShares.nextInt(), 
+								Math.abs(price.nextDouble()),
+								Timestamp.from(Instant.now()),
+								listOfStocks.get(j)));
 			}
 		}
 	}

@@ -6,6 +6,7 @@ import java.util.LinkedList;
 public class TradeMarket {
 
 	private LinkedList<Trade> trades;
+	private long tradeIdCounter = 1;
 	
 	public TradeMarket() {
 		this.trades = new LinkedList<Trade>();
@@ -28,9 +29,41 @@ public class TradeMarket {
 		}
 	}
 	
+	public long getNewTradeIdCounter() {
+		return this.tradeIdCounter++;
+	}
+	
 	public void setStockPrice() {
 		
 	}
 	
+	public double getStockPrice() {
+		return 0.0;
+	}
 	
+	public void setGeometricMean() {
+		
+		
+	}
+	
+	public double getGeometricMean() {
+		return 0.0;
+	}
+	
+	
+	public void setPERatio() {
+		
+	}
+	
+	public double getPERatio() {
+		return 0.0;
+	}
+	
+	public void setDividendYield() {
+		
+	}
+	
+	public double getDividendYield() {
+		return 0.0;
+	}
 }
