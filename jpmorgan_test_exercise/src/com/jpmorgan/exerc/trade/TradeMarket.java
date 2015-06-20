@@ -27,7 +27,7 @@ public class TradeMarket {
 	
 	public void addTrade(Trade trade) {
 		// When a new trade is made, the stock price is updated
-		trade.getTradePrice() * trade.getNumOfShares()/trade.getStock().g
+		
 		this.trades.add(trade);
 	}
 	
@@ -52,9 +52,16 @@ public class TradeMarket {
 		return this.listOfStocks.size();
 	}
 	
-	
-	public void setStockPrice(AbstractStock stock) {
+	/**
+	 * Used to set a new stock price after every trade
+	 * @param trade
+	 */
+	public void setStockPrice(Trade trade) {
+		double newStockprice = (trade.getTradePrice() * trade.getNumOfShares())
+				/(trade.getStock().getSoldShares() + trade.getStock().getTotalAvailableShares());
 		
+		getStockBySymbol(trade.getStock().getStockSymbol())
+		.setStockPrice(newStockprice);		
 	}
 	
 	public double getStockPrice() {
