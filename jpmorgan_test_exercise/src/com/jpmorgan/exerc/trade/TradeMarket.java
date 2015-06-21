@@ -27,7 +27,12 @@ public class TradeMarket {
 	
 	public void addTrade(Trade trade) {
 		// When a new trade is made, the stock price is updated
-		
+		setStockPrice(trade);
+		/* 
+		 * Update the Price-Earnings Ratio after every trade is made,
+		 * since it fluctuates with the stock price 
+		 */
+		getStockBySymbol(trade.getStock().getStockSymbol()).setPeRatio();
 		this.trades.add(trade);
 	}
 	
@@ -70,27 +75,9 @@ public class TradeMarket {
 	
 	public void setGeometricMean() {
 		
-		
 	}
 	
 	public double getGeometricMean() {
-		return 0.0;
-	}
-	
-	
-	public void setPERatio() {
-		
-	}
-	
-	public double getPERatio() {
-		return 0.0;
-	}
-	
-	public void setDividendYield() {
-		
-	}
-	
-	public double getDividendYield() {
 		return 0.0;
 	}
 	

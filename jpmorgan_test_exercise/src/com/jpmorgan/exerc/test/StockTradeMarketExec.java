@@ -39,16 +39,23 @@ public class StockTradeMarketExec {
 		
 		// Generate 10 trades for each stock
 		Random numOfShares = new Random();
+		Trade tempTrade;
 		
 		for (int j = 0; j < stockTradeMarket.getNumOfAvailableStocks(); j++) {
 			for (int k = 0; k < 10; k++) {
-				stockTradeMarket.addTrade(
-						new Trade(stockTradeMarket.getNewTradeIdCounter(),
-								numOfShares.nextInt(),
-								Timestamp.from(Instant.now()),
-								stockTradeMarket.getStockBySymbol(stockSymbols[j])));
+				tempTrade = new Trade(stockTradeMarket.getNewTradeIdCounter(),
+						numOfShares.nextInt(),
+						Timestamp.from(Instant.now()),
+						stockTradeMarket.getStockBySymbol(stockSymbols[j]));
+				
+				stockTradeMarket.addTrade(tempTrade);
 			}
+			
+			
 		}
+		
+		
+		stockTradeMarket.setGeometricMean();
 		
 		
 		

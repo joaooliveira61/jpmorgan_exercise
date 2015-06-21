@@ -1,7 +1,8 @@
 package com.jpmorgan.exerc.stock;
 
 /**
- * Stock class
+ * Abstract stock class
+ * For this implementation, the ticker price is equivalent to the stock price 
  * @author João Oliveira
  *
  */
@@ -73,8 +74,8 @@ public abstract class AbstractStock {
 		return peRatio;
 	}
 
-	public void setPeRatio(double peRatio) {
-		this.peRatio = peRatio;
+	public void setPeRatio() {
+		this.peRatio = (getStockPrice()/getLastDividend());
 	}
 
 	public double getStockPrice() {
@@ -115,7 +116,6 @@ public abstract class AbstractStock {
 	 * @param tickerPrice
 	 * @return
 	 */
-	public abstract double getDividendYield(double
-			tickerPrice);
+	public abstract double getDividendYield();
 	
 }
