@@ -25,6 +25,11 @@ public class TradeMarket {
 		this.listOfStocks.add(stock);
 	}
 	
+	/**
+	 * Adds a new trade to the trade list.
+	 * Updates the stock price and PE ratio
+	 * @param trade
+	 */
 	public void addTrade(Trade trade) {
 		// When a new trade is made, the stock price is updated
 		setStockPrice(trade);
@@ -69,16 +74,31 @@ public class TradeMarket {
 		.setStockPrice(newStockprice);		
 	}
 	
-	public double getStockPrice() {
-		return 0.0;
+	/**
+	 * Returns the stock price for a given stock symbol
+	 * @param stockSymbol The stock symbol
+	 * @return
+	 */
+	public double getStockPrice(String stockSymbol) {
+		return getStockBySymbol(stockSymbol).getStockPrice();
 	}
 	
-	public void setGeometricMean() {
+	/**
+	 * Gets the geometric mean of the trade prices for a given stock 
+	 * @return The geometric mean of the trades for a given stock
+	 */
+	public double getGeometricMean(String stockSymbol) {
+		int numOfTrades = 0;
+		double tradePriceSum = 0.0;
 		
-	}
-	
-	public double getGeometricMean() {
-		return 0.0;
+		for (Trade trade : trades) {
+			if (trade.getStock().getStockSymbol().equals(stockSymbol)) {
+				numOfTrades++;
+				tradePriceSum += trade.getStock().getStrockTradePrice(); 
+			}
+		}
+		
+		return Math.pow(tradePriceSum, numOfTrades);
 	}
 	
 	/**
