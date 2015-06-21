@@ -19,77 +19,65 @@ public class Trade {
 	private AbstractStock stock;
 
 	public Trade(long tradeID, int numOfShares,
-			Timestamp timeStamp, AbstractStock stock) {
+			Timestamp timeStamp, AbstractStock stock,
+			double tradePrice) {
 		this.setStock(stock);
 		this.tradeID = tradeID;
 		setNumOfShares(numOfShares);
 		this.timeStamp = timeStamp;
+		setTradePrice(tradePrice);
 	}
 
 	public long getNumOfShares() {
 		return numOfShares;
 	}
-	/**
-	 * 
-	 * @param numOfShares
-	 * @return True if the trade was completed successfuly,
-	 * false if the number of shares available is smaller than the
-	 * number of shares bought in the trade
-	 */
-	public boolean setNumOfShares(long numOfShares) {
-		if (this.getStock().getTotalAvailableShares()
-				> numOfShares) {
+
+	public void setNumOfShares(long numOfShares) {
+		/*
+		 * If the value is greater than 0, shares are bough
+		 * If the value is less than 0, shares are sold
+		 * 
+		 * If the value is zero, set the following default case:
+		 *  -> Number of shares: 1
+		 *  -> Trade indicator : Buy
+		 */
+
+		if (numOfShares > 0 ) {
+			this.numOfShares = numOfShares;
 			/*
-			 * If the value is greater than 0, shares are bough
-			 * If the value is less than 0, shares are sold
-			 * 
-			 * If the value is zero, set the following default case:
-			 *  -> Number of shares: 1
-			 *  -> Trade indicator : Buy
+			 * Updates the number of available shares and the number
+			 * of sold shares
 			 */
-
-			if (numOfShares > 0 ) {
-				this.numOfShares = numOfShares;
-				/*
-				 * Updates the number of available shares and the number
-				 * of sold shares
-				 */
-				this.getStock()
-				.setTotalAvailableShares(
-						this.getStock().getTotalAvailableShares() - numOfShares);
-				this.getStock().setSoldShares(
-						this.getStock().getSoldShares() + numOfShares);
-				this.tradeIndicator = EnumTradeIndicator.BUY;
-			} else if (numOfShares < 0){
-				this.numOfShares = Math.abs(numOfShares);
-				/*
-				 * Updates the number of available shares and the number
-				 * of sold shares
-				 */
-				this.getStock()
-				.setTotalAvailableShares(
-						this.getStock().getTotalAvailableShares() + numOfShares);
-				this.getStock().setSoldShares(
-						this.getStock().getSoldShares() - numOfShares);
-				this.tradeIndicator = EnumTradeIndicator.SELL;
-			} else {
-				this.numOfShares = 1;
-				/*
-				 * Updates the number of available shares and the number
-				 * of sold shares
-				 */
-				this.getStock()
-				.setTotalAvailableShares(
-						this.getStock().getTotalAvailableShares() + 1);
-				this.getStock().setSoldShares(
-						this.getStock().getSoldShares() - 1);
-				this.tradeIndicator = EnumTradeIndicator.BUY;
-			}
-
-			return true;
-
+			this.getStock()
+			.setTotalAvailableShares(
+					this.getStock().getTotalAvailableShares() - numOfShares);
+			this.getStock().setSoldShares(
+					this.getStock().getSoldShares() + numOfShares);
+			this.tradeIndicator = EnumTradeIndicator.BUY;
+		} else if (numOfShares < 0){
+			this.numOfShares = Math.abs(numOfShares);
+			/*
+			 * Updates the number of available shares and the number
+			 * of sold shares
+			 */
+			this.getStock()
+			.setTotalAvailableShares(
+					this.getStock().getTotalAvailableShares() + numOfShares);
+			this.getStock().setSoldShares(
+					this.getStock().getSoldShares() - numOfShares);
+			this.tradeIndicator = EnumTradeIndicator.SELL;
 		} else {
-			return false;
+			this.numOfShares = 1;
+			/*
+			 * Updates the number of available shares and the number
+			 * of sold shares
+			 */
+			this.getStock()
+			.setTotalAvailableShares(
+					this.getStock().getTotalAvailableShares() + 1);
+			this.getStock().setSoldShares(
+					this.getStock().getSoldShares() - 1);
+			this.tradeIndicator = EnumTradeIndicator.BUY;
 		}
 	}
 
@@ -101,12 +89,8 @@ public class Trade {
 		return tradePrice;
 	}
 
-	/**
-	 * Multiplies the number of bough shares in the trade with the current
-	 * stock price
-	 */
-	public void setTradePrice() {
-		this.tradePrice = this.stock.getStockPrice() * this.numOfShares;
+	public void setTradePrice(double tradePrice) {
+		this.tradePrice = tradePrice;
 	}
 
 	public EnumTradeIndicator getTradeIndicator() {

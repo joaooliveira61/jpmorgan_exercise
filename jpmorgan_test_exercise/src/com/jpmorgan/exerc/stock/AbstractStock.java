@@ -14,7 +14,7 @@ public abstract class AbstractStock {
 	private double fixedDividend;
 	private int parValue;
 	private double peRatio = 0.0;
-	private double stockPrice = 0.0;
+	private double stockPrice = 0L;
 	private double strockTradePrice = 0.0;
 	private long totalAvailableShares = 0L;
 	private long soldShares = 0L;
@@ -25,7 +25,7 @@ public abstract class AbstractStock {
 			double fixedDividend, 
 			int parValue, 
 			long availableShares) {
-		
+
 		setStockSymbol(stockSymbol);
 		this.stockType = stockType;
 		setLastDividend(lastDividend);
@@ -35,7 +35,7 @@ public abstract class AbstractStock {
 	}
 
 	public String getStockSymbol() {
-		return stockSymbol;
+		return this.stockSymbol;
 	}
 
 	public void setStockSymbol(String stockSymbol) {
@@ -43,11 +43,11 @@ public abstract class AbstractStock {
 	}
 
 	public EnumStockType getStockType() {
-		return stockType;
+		return this.stockType;
 	}
 
 	public int getLastDividend() {
-		return lastDividend;
+		return this.lastDividend;
 	}
 
 	public void setLastDividend(int lastDividend) {
@@ -55,7 +55,7 @@ public abstract class AbstractStock {
 	}
 
 	public double getFixedDividend() {
-		return fixedDividend;
+		return this.fixedDividend;
 	}
 
 	public void setFixedDividend(double fixedDividend) {
@@ -63,7 +63,7 @@ public abstract class AbstractStock {
 	}
 
 	public int getParValue() {
-		return parValue;
+		return this.parValue;
 	}
 
 	public void setParValue(int parValue) {
@@ -71,45 +71,49 @@ public abstract class AbstractStock {
 	}
 
 	public double getPeRatio() {
-		return peRatio;
+		return this.peRatio;
 	}
 
 	public void setPeRatio() {
-		this.peRatio = (getStockPrice()/getLastDividend());
+		if (getLastDividend() == 0) {
+			this.peRatio = 0;
+		} else {
+			this.peRatio = (getStockPrice()/getLastDividend());
+		}
 	}
 
 	public double getStockPrice() {
-		return stockPrice;
+		return this.stockPrice;
 	}
 
 	public void setStockPrice(double stockPrice) {
 		this.stockPrice = stockPrice;
 	}
-	
+
 	public double getStrockTradePrice() {
-		return strockTradePrice;
+		return this.strockTradePrice;
 	}
 
 	public void setStrockTradePrice(double strockTradePrice) {
 		this.strockTradePrice = strockTradePrice;
 	}
-	
+
 	public long getTotalAvailableShares() {
-		return totalAvailableShares;
+		return this.totalAvailableShares;
 	}
 
 	public void setTotalAvailableShares(long totalAvailableShares) {
 		this.totalAvailableShares = totalAvailableShares;
 	}
-	
+
 	public long getSoldShares() {
-		return soldShares;
+		return this.soldShares;
 	}
 
 	public void setSoldShares(long soldShares) {
 		this.soldShares = soldShares;
 	}
-	
+
 	/**
 	 * Method do determine the dividend yield,
 	 * depending on the type of stock
@@ -117,5 +121,5 @@ public abstract class AbstractStock {
 	 * @return
 	 */
 	public abstract double getDividendYield();
-	
+
 }

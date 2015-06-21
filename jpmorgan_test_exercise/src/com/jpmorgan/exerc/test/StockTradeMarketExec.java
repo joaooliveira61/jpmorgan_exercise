@@ -25,7 +25,8 @@ public class StockTradeMarketExec {
 		int[] lastDividends = {0, 8, 23, 8, 13};
 		int[] fixedDividends = {0, 0, 0, 2, 0};
 		int[] parValues = {100, 100, 60, 100, 250};
-		long[] numberOfShares = {1000L, 243234L, 9944851L, 323214L, 99534L};
+		long[] numberOfShares = {99939223321L, 49213913345L, 9912932148414L,
+				32392102323L, 99540939831L};
 
 		Random stockPrice = new Random();
 		AbstractStock tempStock;
@@ -42,28 +43,32 @@ public class StockTradeMarketExec {
 
 		// Generate 10 trades for each stock
 		Random numOfShares = new Random();
+		Random tradePrice = new Random();
 		Trade tempTrade;
+		int numOfSharesTemp = 0;
 
 		for (int j = 0; j < stockTradeMarket.getNumOfAvailableStocks(); j++) {
 			for (int k = 0; k < 10; k++) {
+				while ((numOfSharesTemp = numOfShares.nextInt()) <=  0) {
+					// loop to make sure the value is greater than 0
+				}
+				
 				tempTrade = new Trade(stockTradeMarket.getNewTradeIdCounter(),
-						numOfShares.nextInt(),
+						numOfSharesTemp,
 						Timestamp.from(Instant.now()),
-						stockTradeMarket.getStockBySymbol(stockSymbols[j]));
+						stockTradeMarket.getStockBySymbol(stockSymbols[j]),
+						Math.abs(tradePrice.nextDouble()));
 
 				stockTradeMarket.addTrade(tempTrade);
+				
 			}
 			
+			System.out.println("Stock: " + stockSymbols[j]);
 			System.out.println("Geometric mean: " 
 					+ stockTradeMarket.getGeometricMean(stockSymbols[j]));
 			System.out.println("Stock price: " 
 					+ stockTradeMarket.getStockPrice(stockSymbols[j]));
 		}
-
-
-		
-
-
 
 	}
 
