@@ -68,6 +68,12 @@ public class StockTradeMarketExec {
 					+ stockTradeMarket.getGeometricMean(stockSymbols[j]));
 			System.out.println("Stock price: " 
 					+ stockTradeMarket.getStockPrice(stockSymbols[j]));
+			System.out.println("Stock PE ratio: " 
+					+ stockTradeMarket.getStockBySymbol(stockSymbols[j]).getPeRatio());
+			System.out.println("Stock type: "
+					+ stockTradeMarket.getStockBySymbol(stockSymbols[j]).getStockType());
+			System.out.println("Stock divident yield: "
+					+ stockTradeMarket.getStockBySymbol(stockSymbols[j]).getDividendYield());
 		}
 
 	}
